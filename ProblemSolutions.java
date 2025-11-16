@@ -1,7 +1,6 @@
-
 /******************************************************************
  *
- *   YOUR NAME / SECTION NUMBER
+ *   Alena Lunkina / 002
  *
  *   This java file contains the problem solutions for the methods lastBoulder,
  *   showDuplicates, and pair methods. You should utilize the Java Collection
@@ -16,29 +15,29 @@ public class ProblemSolutions {
 
     /**
      * Priority Queue (PQ) Game
-     *
+     * <p>
      * PQ1 Problem Statement:
      * -----------------------
-     *
+     * <p>
      * You are given an array of integers of boulders where boulders[i] is the
      * weight of the ith boulder.
-     *
+     * <p>
      * We are playing a game with the boulders. On each turn, we choose the heaviest
      * two boulders and smash them together. Suppose the heaviest two boulders have
      * weights x and y. The result of this smash is:
-     *
-     *    If x == y, both boulders are destroyed, and
-     *    If x != y, the boulder of weight x is destroyed, and the boulder of
-     *               weight y has new weight y - x.
-     *
+     * <p>
+     * If x == y, both boulders are destroyed, and
+     * If x != y, the boulder of weight x is destroyed, and the boulder of
+     * weight y has new weight y - x.
+     * <p>
      * At the end of the game, there is at most one boulder left.
-     *
+     * <p>
      * Return the weight of the last remaining boulder. If there are no boulders
      * left, return 0.
-     *
-     *
+     * <p>
+     * <p>
      * Example 1:
-     *
+     * <p>
      * Input: boulders = [2,7,4,1,8,1]
      * Output: 1
      * Explanation:
@@ -47,29 +46,44 @@ public class ProblemSolutions {
      * we combine 2 and 1 to get 1 so the list converts to [1,1,1] then,
      * we combine 1 and 1 to get 0 so the list converts to [1] then that's the
      * value of the last stone.
-     *
+     * <p>
      * Example 2:
-     *
+     * <p>
      * Input: boulders = [1]
      * Output: 1
-     *
-     *
-     *
+     * <p>
+     * <p>
+     * <p>
      * RECOMMENDED APPROACH
-     *
+     * <p>
      * Initializing Priority Queue in reverse order, so that it gives
      * max element at the top. Taking top Elements and performing the
      * given operations in the question as long as 2 or more boulders;
      * returning the 0 if queue is empty else return pq.peek().
      */
 
-  public static int lastBoulder(int[] boulders) {
+    public static int lastBoulder(int[] boulders) {     // ADD YOUR CODE HERE
 
-      //
-      // ADD YOUR CODE HERE - DO NOT FORGET TO ADD YOUR NAME / SECTION # ABOVE
-      //
-      return -1;
-  }
+        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+
+        for (int i = 0; i < boulders.length; i++) {
+            pq.offer(boulders[i]);
+        }
+
+        while (pq.size() > 1) {
+            int y = pq.remove();
+            int x = pq.remove();
+
+            if (y != x) {
+                pq.offer(y - x);
+            }
+        }
+
+        if (pq.isEmpty()) {
+            return 0;
+        }
+        return pq.peek();
+    }
 
 
     /**
@@ -89,15 +103,32 @@ public class ProblemSolutions {
      *               more than once in the input list. They will be in ascending order.
      */
 
-    public static ArrayList<String> showDuplicates(ArrayList<String> input) {
+    public static ArrayList<String> showDuplicates(ArrayList<String> input) {       //  YOUR CODE GOES HERE
 
-        //
-        //  YOUR CODE GOES HERE
-        //
-        return new ArrayList<>();  // Make sure result is sorted in ascending order
+        ArrayList<String> dup = new ArrayList<>(input);
 
+    for (int j = 1; j < dup.size(); j++) {
+        String key = dup.get(j);
+        int i = j - 1;
+
+        while (i >= 0 && dup.get(i).compareTo(key) > 0) {
+            dup.set(i + 1, dup.get(i));
+            i = i - 1;
+        }
+        dup.set(i + 1, key);
     }
 
+        ArrayList<String> sort = new ArrayList<>();
+
+    for (int i = 1; i < dup.size(); i++) {
+        if (dup.get(i).equals(dup.get(i - 1))) {
+            if (sort.isEmpty() || !sort.get(sort.size() - 1).equals(dup.get(i))) {
+                sort.add(dup.get(i));
+            }
+        }
+    }
+    return sort;
+}
 
     /**
      * Finds pairs in the input array that add up to k.
@@ -129,11 +160,40 @@ public class ProblemSolutions {
      *  Java Framework documentation in its use.
      */
 
-    public static ArrayList<String> pair(int[] input, int k) {
+    public static ArrayList<String> pair(int[] input, int k) {      //  YOUR CODE GOES HERE
 
-        //
-        //  YOUR CODE GOES HERE
-        //
-        return new ArrayList<>();  // Make sure returned lists is sorted as indicated above
+        for (int j = 1; j < input.length; j++) {
+            int key = input[j];
+            int i = j - 1;
+
+            while (i >= 0 && input[i] > key) {
+                input[i + 1] = input[i];
+                i = i - 1;
+            }
+            input[i + 1] = key;
+        }
+
+        ArrayList<String> p = new ArrayList<>();
+
+        for (int i = 0; i < input.length; i++) {
+
+            for (int j = i + 1; j < input.length; j++) {
+
+                if (input[i] + input [j] == k) {
+                    int a = input[i];
+                    int b = input[j];
+
+                    String pair = "(" + a + ", " + b + ")";
+
+                    if (!p.contains(pair)) {
+                        p.add(pair);
+                    }
+                }
+            }
+        }
+
+        Collections.sort(p);
+
+        return p;
     }
 }
