@@ -74,7 +74,7 @@ public class ProblemSolutions {
             int y = pq.remove();
             int x = pq.remove();
 
-            if (y != x) {
+            if (x != y) {
                 pq.offer(y - x);
             }
         }
