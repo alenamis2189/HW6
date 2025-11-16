@@ -64,7 +64,7 @@ public class ProblemSolutions {
 
     public static int lastBoulder(int[] boulders) {     // ADD YOUR CODE HERE
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
+        PriorityQueue<Integer> pq = new PriorityQueue<>((x, y) -> y - x);
 
         for (int i = 0; i < boulders.length; i++) {
             pq.offer(boulders[i]);
@@ -170,6 +170,7 @@ public class ProblemSolutions {
                 input[i + 1] = input[i];
                 i = i - 1;
             }
+
             input[i + 1] = key;
         }
 
