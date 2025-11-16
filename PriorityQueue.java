@@ -1,4 +1,3 @@
-
 /******************************************************************
  *
  *   Alena Lunkina / 002
@@ -150,7 +149,6 @@ class PriorityQueue<E, P> {
      */
 
     public Node add(E e, P priority) {      // YOUR CODE GOES HERE
-
         int idx = tree.size();
         Node newNode = new Node(e, priority, idx);
 
@@ -172,14 +170,18 @@ class PriorityQueue<E, P> {
 
     public boolean contains(E e) {      // ADD YOUR CODE HERE
 
-        for (Node node : tree) {
+        for (int i = 0; i < tree.size(); i++) {
+            Node node = tree.get(i);
+
             if (e == null && node.value == null) {
-                    return true;
-                }
-            if (e != null && e.equals(node.value)) {
+                return true;
+            }
+            
+            if (e.equals(node.value)) {
                 return true;
             }
         }
+        
         return false;
     }
 
@@ -460,3 +462,4 @@ class PriorityQueue<E, P> {
         }
     }
 }
+
